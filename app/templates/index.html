@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container story-container">
+
+    <!-- HERO -->
+    <div class="text-center hero">
+        <h1 class="title">CODEQUEST</h1>
+        <p class="subtitle">A journey through the Python Country</p>
+    </div>
+
+    <!-- SCENE 1 -->
+    <div class="row story-block align-items-center">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='img/airport.jpg') }}"
+                 class="img-fluid story-img">
+        </div>
+        <div class="col-md-6">
+            <p>
+                You are a stranger. A traveler guided only by curiosity.
+                This time your path leads you to a mysterious land —
+                <span class="highlight">Pythonia</span>.
+            </p>
+        </div>
+    </div>
+
+    <!-- SCENE 2 -->
+    <div class="row story-block align-items-center flex-md-row-reverse">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='img/crowd.jpg') }}"
+                 class="img-fluid story-img">
+        </div>
+        <div class="col-md-6">
+            <p>
+                The plane lands safely, yet something feels wrong.
+                The airport is quiet. Faces around you look tired,
+                frightened… hopeless.
+            </p>
+        </div>
+    </div>
+
+    <!-- SCENE 3 -->
+    <div class="row story-block align-items-center">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='img/manager.jpg') }}"
+                 class="img-fluid story-img">
+        </div>
+        <div class="col-md-6">
+            <p>
+                You approach the airport manager.
+                <br><br>
+                <i>"What happened here?"</i>
+                <br><br>
+                He lowers his voice:
+                <br>
+                <span class="quote">
+                    "Our president was taken… two days ago."
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <!-- FINAL -->
+    <div class="text-center final-block">
+        <p>
+            The country waits for a hero.
+            And somehow… everyone believes it might be you.
+        </p>
+
+        <h3>Good luck, stranger.</h3>
+
+        <a href="{{ url_for('main.login') }}"
+           class="btn btn-primary start-btn">
+            Start Your Journey →
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

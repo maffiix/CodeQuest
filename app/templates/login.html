@@ -1,18 +1,45 @@
 {% extends "base.html" %}
 
-{% block style %}
-<link rel="stylesheet" href="/static/css/login.css">
-{% endblock %}
-
 {% block content %}
-<h1>Authorization</h1>
-<form action="/login" method="post">
-  <input placeholder="username..." id="username" name="username">
-  <br>
-  <input placeholder="password..." type="password" id="password" name="password">
-  <br><br>
-  <div>
-    <button type="submit">Login</button>
-  </div>
-</form>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+
+<div class="auth-card">
+
+    <h1 class="logo">CodeQuest</h1>
+    <h2>Login</h2>
+
+    {% if message %}
+        <div class="error-box">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+        <button type="submit">Enter</button>
+
+    </form>
+
+    <p class="switch">
+        No account?
+        <a href="{{ url_for('main.register') }}">Register</a>
+    </p>
+
+</div>
+
 {% endblock %}

@@ -1,23 +1,52 @@
 {% extends "base.html" %}
 
-{% block style %}
-<link rel="stylesheet" href="/static/css/register.css">
-{% endblock %}
-
 {% block content %}
-<h1>Register</h1><br>
-<form action="/register" method="post">
-  <input id="username" name="username" placeholder="username...">
-  <br>
-  <input id="password" name="password" placeholder="password..." type="password">
-  <br>
-  <input id="password_repeat" name="password_repeat" placeholder="reenter password..." type="password">
-  <br><br>
-  <div class="text-center">
-    <button type="submit">Register</button>
-  </div>
-</form>
-{% if message %}
-<p>{{ message }}</p>
-{% endif %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+
+<div class="auth-card">
+
+    <h1 class="logo">CodeQuest</h1>
+    <h2>Create Account</h2>
+
+    {% if message %}
+        <div class="error-box">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+        <input
+            type="password"
+            name="password_repeat"
+            placeholder="Repeat password"
+            required
+        >
+
+        <button type="submit">Register</button>
+
+    </form>
+
+    <p class="switch">
+        Already registered?
+        <a href="{{ url_for('main.login') }}">Login</a>
+    </p>
+
+</div>
+
 {% endblock %}

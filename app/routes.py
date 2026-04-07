@@ -8,12 +8,7 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
-    user = User()
-    user.username = "maffiix"
-    db.session.add(user)
-    db.session.commit()
-
-    return "User added!"
+    return render_template("index.html")
 
 
 @main.route("/register", methods=["GET", "POST"])
@@ -51,7 +46,7 @@ def login():
         login_user(user)
         return redirect(url_for("main.dashboard"))
 
-    return redirect(url_for("main.login"))
+    return render_template("login.html", message="Invalid username or password")
 
 
 @login_required
