@@ -31,6 +31,8 @@ def register():
         return render_template("register.html", message="Passwords don't match")
     if not password:
         return render_template("register.html", message="Password can't be empty")
+    if User.query.filter_by(username=username).first() is not None:
+        return render_template("register.html", message="Username already exists")
     user = User()
     user.username = username
     user.set_password(password)
@@ -40,7 +42,7 @@ def register():
     return redirect(url_for("main.login"))
 
 
-@main.route("/level/<int:level_id>", method="GET")
+@main.route("/level/<int:level_id>", methods=["GET"])
 @login_required
 def level(level_id):
     level = Level.query.get_or_404(level_id)
