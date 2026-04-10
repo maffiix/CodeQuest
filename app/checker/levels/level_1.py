@@ -18,9 +18,9 @@ def check(user_code: str):
     greet = namespace["greet"]
 
     tests = [
-        ("Alex", "Hello, Alex!"),
-        ("Python", "Hello, Python!"),
-        ("World", "Hello, World!")
+        ("ABCD-1111-BOSCALI", "2E996AB-BOSCALI"),
+        ("A2BDS-122456-BASD", "Неверный формат. Используйте: ABCD-1111-BOSCALI"),
+        ("BBAC-1152-PRIMERVA", "34C8600-PRIMERVA")
     ]
 
     for i, (inp, expected) in enumerate(tests, start=1):
