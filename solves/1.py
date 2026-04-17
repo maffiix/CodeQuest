@@ -5,8 +5,7 @@ def generate_baggage_tag(user_input):
     match = re.match(pattern, user_input)
     
     if not match:
-        print("Неверный формат. Используйте: ABCD-1111-BOSCALI")
-        return None
+        return "Неверный формат. Используйте: ABCD-1111-BOSCALI"
     
     letters_part = match.group(1)
     digits_part = match.group(2)
@@ -19,7 +18,7 @@ def generate_baggage_tag(user_input):
     result = f"{hex_result}-{country_part.upper()}"
     return result
 
-user_input = input("Введите номер билета: ")
+user_input = input()
 tag = generate_baggage_tag(user_input)
 if tag:
-    print(f"Талончик багажа: {tag}")
+    print(tag)

@@ -6,7 +6,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 
-def create_app():
+def nnncreate_app():
     app = Flask(__name__)
     app.config.from_object("config.Config")
     db.init_app(app)

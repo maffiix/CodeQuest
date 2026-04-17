@@ -11,7 +11,7 @@
         <h4>{{ level.title }}</h4>
 
         {% if level.id in completed_ids %}
-            ✅ Completed
+            <a href="{{ url_for('main.level', level_id=level.id) }}">✅ Completed</a>
         {% else %}
             <a href="{{ url_for('main.level', level_id=level.id) }}"
                class="btn btn-primary">

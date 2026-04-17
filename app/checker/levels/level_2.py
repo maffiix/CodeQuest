@@ -1,48 +1,38 @@
+import subprocess
+
+
 def check(user_code: str):
-    namespace = {}
-
-    try:
-        exec(user_code, namespace)
-    except Exception as e:
-        return False, {
-            "type": "runtime_error",
-            "message": str(e)
-        }
-
-    if "calculate" not in namespace:
-        return False, {
-            "type": "compile_error",
-            "message": "Function calculate() not found"
-        }
-
-    calculate = namespace["calculate"]
-
     tests = [
-        ((1, 2), 3),
-        ((0, 0), 0),
-        ((1, 1), 2),
-        ((6, 6), 12),
-        ((100, 100), 200)
+        ("1\n2\n", "3"),
+        ("o\n0\n", "0"),
+        ("1\n1\n", "2"),
+        ("6\n6\n", "12"),
+        ("100\n100\n", "200")
     ]
 
     for i, (inp, expected) in enumerate(tests, start=1):
         try:
-            result = calculate(*inp)
+            proc = subprocess.run(
+                ["python", "-c", user_code],
+                input=inp,
+                capture_output=True,
+                text=True
+            )
+            result = proc.stdout.strip()
+            if result != expected:
+                return False, {
+                    "type": "wrong_answer",
+                    "test": i,
+                    "input": inp,
+                    "expected": expected,
+                    "got": result
+                }
         except Exception as e:
             return False, {
                 "type": "runtime_error",
                 "test": i,
                 "input": inp,
                 "message": str(e)
-            }
-
-        if result != expected:
-            return False, {
-                "type": "wrong_answer",
-                "test": i,
-                "input": inp,
-                "expected": expected,
-                "got": result
             }
 
     return True, {
