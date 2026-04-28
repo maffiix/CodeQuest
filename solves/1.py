@@ -22,3 +22,4 @@ user_input = input()
 tag = generate_baggage_tag(user_input)
 if tag:
     print(tag)
+

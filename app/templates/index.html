@@ -12,72 +12,67 @@
     <!-- HERO -->
     <div class="text-center hero">
         <h1 class="title">CODEQUEST</h1>
-        <p class="subtitle">A journey through the Python Country</p>
+        <p class="subtitle">A journey through the... ummmmm.... intelligence?<br>idk what to write here</p>
+    </div>
+    <!-- PROLOGUE -->
+    <div class="text-center hero">
+        <h2 class="title">ПРОЛОГ</h2>
+        
     </div>
 
-    <!-- SCENE 1 -->
     <div class="row story-block align-items-center">
         <div class="col-md-6">
-            <img src="{{ url_for('static', filename='img/airport.jpg') }}"
+            <img src="{{ url_for('static', filename='/img/port_maris.jpg') }}"
                  class="img-fluid story-img">
+            <figcaption>Порт МАРИС. Историческое место не так ли...</figcaption>
         </div>
         <div class="col-md-6">
             <p>
-                You are a stranger. A traveler guided only by curiosity.
-                This time your path leads you to a mysterious land —
-                <span class="highlight">Pythonia</span>.
+                Страна действия: БОСКАЛИ (Малая милитаризированная страна обладающая ядерным вооружением, Федеративная Демократическая республика)
+                ДАТА: 2091, 12 ИЮЛЯ
+                ВРЕМЯ 14:23. 
+                ГЕОГРАФИЧЕСКОЕ РАСПОЛОЖЕНИЕ:
+                АВТОНОМНЫЙ АРХИПЕЛАГ БОСКАЛИ
+                ЛОКАЦИЯ: ГОРОД "ПОРТ МАРИС" (300 тысяч живых человеков)
+                МЕЖДУНАРОДНЫЙ АЭРОПОРТ "МАИСО" (алиасы АЭРОПОРТ МАРИС (maris airport))
             </p>
         </div>
     </div>
 
-    <!-- SCENE 2 -->
     <div class="row story-block align-items-center flex-md-row-reverse">
         <div class="col-md-6">
-            <img src="{{ url_for('static', filename='img/crowd.jpg') }}"
-                 class="img-fluid story-img">
+            <img src="{{ url_for('static', filename='/img/AIRPORT_MAISO_DIAGRAM_SMAP.jpg') }}"
+                 class="story-img">
+            <figcaption>Схема аэропорта МАИСО. Не знаю зачем эта информация вам нужна</figcaption>
         </div>
         <div class="col-md-6">
             <p>
-                The plane lands safely, yet something feels wrong.
-                The airport is quiet. Faces around you look tired,
-                frightened… hopeless.
+                Вы - Частный детектив (и неофициально немного разведчик боскали) ден Зигфрид-Карл-Йозеф Леман (или далее леман, агент Леман, лёня, ЛИМОН)
+
+                Только что прибыли из за границы после успешного выполнения задания по добытию разведданых в относительно нейтральной стране
+                Примервианская Демократическая республика (ПДР) (Малая милитаризированная страна обладающая ядерным вооружением, Тоталитристичесий коммунизм) в которой Боскали в торговом союзе
+                (но по секретным данным которые вам доступны из за госслужбы поитхоньку назревает конфликт, судя по всему вооружённый просто о нём никто не говорит всё под грифом секретно)
+
             </p>
         </div>
     </div>
 
     <!-- SCENE 3 -->
-    <div class="row story-block align-items-center">
-        <div class="col-md-6">
-            <img src="{{ url_for('static', filename='img/manager.jpg') }}"
-                 class="img-fluid story-img">
-        </div>
-        <div class="col-md-6">
+    <div class="row align-items-center">
             <p>
-                You approach the airport manager.
-                <br><br>
-                <i>"What happened here?"</i>
-                <br><br>
-                He lowers his voice:
-                <br>
-                <span class="quote">
-                    "Our president was taken… two days ago."
-                </span>
+                Собственно вот и первое задание: вспомнить номер своего багажа.
             </p>
         </div>
     </div>
 
     <!-- FINAL -->
     <div class="text-center final-block">
-        <p>
-            The country waits for a hero.
-            And somehow… everyone believes it might be you.
-        </p>
 
-        <h3>Good luck, stranger.</h3>
+        <h3>Поехали!</h3>
 
         <a href="{{ url_for('main.login') }}"
            class="btn btn-primary start-btn">
-            Start Your Journey →
+            Начинаем →
         </a>
     </div>
 
