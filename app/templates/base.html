@@ -8,7 +8,10 @@
               crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
+        <nav class="navbar navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="/">Navbar</a>
+        </nav>
+    </nav>
     {% block styles %}{% endblock %}
 </head>
 <body>
@@ -19,3 +22,5 @@
 
 </body>
 </html>
+
+

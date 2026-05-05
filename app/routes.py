@@ -79,7 +79,7 @@ def login():
 
     if user and user.check_password(password):
         login_user(user)
-        return redirect(url_for("main.levels"))
+        return redirect(url_for("main.index"))
 
     return render_template("login.html", message="Invalid username or password")
 
@@ -108,7 +108,7 @@ def submit_solution(level_id):
             db.session.add(progress)
             db.session.commit()
 
-        return redirect(url_for("main.levels"))
+        return redirect(url_for("main.index"))
 
     return render_template(
         "level.html",

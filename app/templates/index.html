@@ -7,75 +7,12 @@
 
 {% block content %}
 
-<div class="container story-container">
-
-    <!-- HERO -->
-    <div class="text-center hero">
-        <h1 class="title">CODEQUEST</h1>
-        <p class="subtitle">A journey through the... ummmmm.... intelligence?<br>idk what to write here</p>
-    </div>
-    <!-- PROLOGUE -->
-    <div class="text-center hero">
-        <h2 class="title">ПРОЛОГ</h2>
-        
-    </div>
-
-    <div class="row story-block align-items-center">
-        <div class="col-md-6">
-            <img src="{{ url_for('static', filename='/img/port_maris.jpg') }}"
-                 class="img-fluid story-img">
-            <figcaption>Порт МАРИС. Историческое место не так ли...</figcaption>
-        </div>
-        <div class="col-md-6">
-            <p>
-                Страна действия: БОСКАЛИ (Малая милитаризированная страна обладающая ядерным вооружением, Федеративная Демократическая республика)
-                ДАТА: 2091, 12 ИЮЛЯ
-                ВРЕМЯ 14:23. 
-                ГЕОГРАФИЧЕСКОЕ РАСПОЛОЖЕНИЕ:
-                АВТОНОМНЫЙ АРХИПЕЛАГ БОСКАЛИ
-                ЛОКАЦИЯ: ГОРОД "ПОРТ МАРИС" (300 тысяч живых человеков)
-                МЕЖДУНАРОДНЫЙ АЭРОПОРТ "МАИСО" (алиасы АЭРОПОРТ МАРИС (maris airport))
-            </p>
-        </div>
-    </div>
-
-    <div class="row story-block align-items-center flex-md-row-reverse">
-        <div class="col-md-6">
-            <img src="{{ url_for('static', filename='/img/AIRPORT_MAISO_DIAGRAM_SMAP.jpg') }}"
-                 class="story-img">
-            <figcaption>Схема аэропорта МАИСО. Не знаю зачем эта информация вам нужна</figcaption>
-        </div>
-        <div class="col-md-6">
-            <p>
-                Вы - Частный детектив (и неофициально немного разведчик боскали) ден Зигфрид-Карл-Йозеф Леман (или далее леман, агент Леман, лёня, ЛИМОН)
-
-                Только что прибыли из за границы после успешного выполнения задания по добытию разведданых в относительно нейтральной стране
-                Примервианская Демократическая республика (ПДР) (Малая милитаризированная страна обладающая ядерным вооружением, Тоталитристичесий коммунизм) в которой Боскали в торговом союзе
-                (но по секретным данным которые вам доступны из за госслужбы поитхоньку назревает конфликт, судя по всему вооружённый просто о нём никто не говорит всё под грифом секретно)
-
-            </p>
-        </div>
-    </div>
-
-    <!-- SCENE 3 -->
-    <div class="row align-items-center">
-            <p>
-                Собственно вот и первое задание: вспомнить номер своего багажа.
-            </p>
-        </div>
-    </div>
-
-    <!-- FINAL -->
-    <div class="text-center final-block">
-
-        <h3>Поехали!</h3>
-
-        <a href="{{ url_for('main.login') }}"
-           class="btn btn-primary start-btn">
-            Начинаем →
-        </a>
-    </div>
-
-</div>
+{% if current_user.is_authenticated %}
+  <div class="d-flex justify-content-center align-items-center vh-100">
+      <a href="{{ url_for('main.logout') }}" class="btn btn-danger btn-lg">Выйти из аккаунта</a>
+  </div>
+{% else %}
+      <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg">Войти в систему</a>
+{% endif %}
 
 {% endblock %}
