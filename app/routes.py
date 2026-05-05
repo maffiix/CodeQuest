@@ -9,7 +9,16 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
-    return render_template("index.html")
+    levels = Level.query.order_by(Level.order).all()
+
+    completed_ids = {
+        p.level_id
+        for p in UserProgress.query.filter_by(user_id=current_user.id, completed=True)
+    }
+
+    return render_template("index.html",
+        levels=levels,
+        completed_ids=completed_ids)
 
 
 @main.route("/logout")

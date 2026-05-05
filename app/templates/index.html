@@ -8,11 +8,33 @@
 {% block content %}
 
 {% if current_user.is_authenticated %}
-  <div class="d-flex justify-content-center align-items-center vh-100">
-      <a href="{{ url_for('main.logout') }}" class="btn btn-danger btn-lg">Выйти из аккаунта</a>
+  <div class="container mt-5">
+    <h1 class="mb-4">Уровни</h1>
+    
+    <div class="row">
+      {% for level in levels %}
+            {% if level.id in completed_ids %}
+                  <div class="card mb-3 p-3">
+                        <h4>{{ level.title }}</h4>
+
+                              <a href="{{ url_for('main.level', level_id=level.id) }}">Completed</a>
+                  </div>
+            {% else %}
+                  <div class="card mb-3 p-3" style="background-color: gray;">
+                        <h4>{{ level.title }}</h4>
+                        <a href="{{ url_for('main.level', level_id=level.id) }}"
+                        class="btn btn-primary">
+                        Enter
+                        </a>
+                  </div>
+            {% endif %}
+      {% endfor %}
+    </div>
   </div>
 {% else %}
-      <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg">Войти в систему</a>
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg">Войти в систему</a>
+  </div>
 {% endif %}
 
 {% endblock %}
