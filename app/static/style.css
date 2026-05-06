@@ -1,0 +1,19 @@
+body {
+    font-family: "JetBrains Mono", monospace;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+p {
+    line-height: 1.7;
+    color: #cbd5e1;
+}
+
+a {
+    text-decoration: none;
+}

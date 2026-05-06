@@ -2,12 +2,15 @@
 
 ### *Need to bo done*
 
- - Make beautiful background
  - Improve stylesheets
- - Make first levels
  - Make normal /dashboard
+ - Перемещение между страничками
+ - Оглавление
+ - Шапка сайта
 
 ### *Already done*
 
+ - Make first levels
+ - Make beautiful background
  - Made login logic
  - Made database with users

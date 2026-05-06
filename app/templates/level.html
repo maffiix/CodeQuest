@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/level.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+<h2>{{ level.title }}</h2>
+<p>{{ level.description|safe }}</p>
+
+<form method="POST" action="{{ url_for('main.submit_solution', level_id=level.id) }}">
+    <div class="mb-2">
+        <textarea id="code-area" name="code" class="form-control" rows="12">{{ level.starter_code }}</textarea>
+    </div>
+
+    {% if error %}
+    <div id="error-box" class="alert alert-danger mt-3">
+        <h5>Error Details:</h5>
+        {% if error["type"] == "wrong_answer" %}
+            <h3>Wrong Answer!</h3>
+        {% elif error["type"] == "runtime_error" %}
+            <h3>Runtime Error!</h3>
+        {% endif %}
+        {% for key in error %}
+            {% if key == "test" %}
+                <h6>Test Failed (Number): {{ error[key] }}</h6>
+            {% elif key == "input" %}
+                <h6>Input Failed: {{ error[key] }}</h6>
+            {% elif key == "message" %}
+                <h6>Message: {{ error[key] }}</h6>
+            {% elif key == "expected" %}
+                <h6>Expected: {{ error[key] }}</h6>
+            {% elif key == "got" %}
+                <h6>Got: {{ error[key] }}</h6>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <button class="btn btn-success mt-3">Submit Solution</button>
+</form>
+
+</div>
+{% endblock %}

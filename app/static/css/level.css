@@ -1,0 +1,18 @@
+#code-area {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    background-color: #1e1e1e;
+    color: #f8f8f2;
+    border-radius: 5px;
+}
+
+.failed-test {
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #2b2b2b;
+    border-radius: 4px;
+}
+
+p {
+
+}

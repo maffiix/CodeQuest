@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+<h1>Levels</h1>
+
+{% for level in levels %}
+    <div class="card mb-3 p-3">
+
+        <h4>{{ level.title }}</h4>
+
+        {% if level.id in completed_ids %}
+            <a href="{{ url_for('main.level', level_id=level.id) }}">✅ Completed</a>
+        {% else %}
+            <a href="{{ url_for('main.level', level_id=level.id) }}"
+               class="btn btn-primary">
+               Enter
+            </a>
+        {% endif %}
+
+    </div>
+{% endfor %}
+
+</div>
+{% endblock %}
