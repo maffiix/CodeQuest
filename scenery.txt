@@ -140,7 +140,7 @@ INCORRECT INPUT: no valid path found
 
 ABBR: ******
 Name: ******
-CrDat: YYYY/MM/DD (Дата создания по ISO 8601)ё
+CrDat: YYYY/MM/DD (Дата создания по ISO 8601)
 Type: ******
 [хар-ка 1]: [данные хар-ки 1]
 [хар-ка 2]: [данные хар-ки 2]
