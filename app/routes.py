@@ -9,7 +9,19 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
-    return render_template("index.html")
+    levels = Level.query.order_by(Level.order).all()
+    completed_ids = []
+    try:
+        completed_ids = {
+            p.level_id
+            for p in UserProgress.query.filter_by(user_id=current_user.id, completed=True)
+        }
+    except:
+        completed_ids = []
+
+    return render_template("index.html",
+        levels=levels,
+        completed_ids=completed_ids)
 
 
 @main.route("/logout")
@@ -79,7 +91,7 @@ def login():
 
     if user and user.check_password(password):
         login_user(user)
-        return redirect(url_for("main.levels"))
+        return redirect(url_for("main.index"))
 
     return render_template("login.html", message="Invalid username or password")
 
@@ -108,7 +120,7 @@ def submit_solution(level_id):
             db.session.add(progress)
             db.session.commit()
 
-        return redirect(url_for("main.levels"))
+        return redirect(url_for("main.index"))
 
     return render_template(
         "level.html",
