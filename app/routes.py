@@ -19,6 +19,7 @@ def index():
     except:
         completed_ids = []
 
+    levels = levels[0:len(completed_ids) + 1]
     return render_template("index.html",
         levels=levels,
         completed_ids=completed_ids)
