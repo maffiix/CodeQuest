@@ -7,7 +7,13 @@
 {% block content %}
 <div class="container mt-5">
 
-<h2>{{ level.title }}</h2>
+<div class="d-flex align-items-center gap-3 mb-3">
+    <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">
+        Назад
+    </a>
+    <h2 class="mb-0">{{ level.title }}</h2>
+</div>
+
 <p>{{ level.description|safe }}</p>
 
 <form method="POST" action="{{ url_for('main.submit_solution', level_id=level.id) }}">

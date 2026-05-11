@@ -3,6 +3,9 @@ from flask_login import login_user, login_required, current_user, logout_user
 from .models import User, Level, UserProgress
 from app.checker.runner import run_checker
 from app import db, login_manager
+import os
+import json
+
 
 main = Blueprint("main", __name__)
 
@@ -62,7 +65,7 @@ def level(level_id):
     return render_template("level.html", level=level)
 
 
-@main.route("/levels")
+""" @main.route("/levels")
 @login_required
 def levels():
 
@@ -77,7 +80,7 @@ def levels():
         "levels.html",
         levels=levels,
         completed_ids=completed_ids
-    )
+    ) """
 
 
 @main.route("/login", methods=["GET", "POST"])
@@ -129,6 +132,29 @@ def submit_solution(level_id):
         error=message
     )
 
+
+@main.route("/storytelling/<int:story_id>")
+def view_story(story_id):
+    # data лежит в app
+    story_file = os.path.join(os.path.dirname(__file__), 'data', 'story.json')
+    
+    try:
+        with open(story_file, 'r', encoding='utf-8') as f:
+            stories = json.load(f)
+    except FileNotFoundError:
+        return "Файл сюжета не найден", 404
+    
+    story = None
+    for key, value in stories.items():
+        if value.get('id') == story_id:
+            story = value
+            story['key'] = key
+            break
+    
+    if not story:
+        return "Сюжет не найден", 404
+    
+    return render_template("story_template.html", story=story)
 
 @login_manager.user_loader
 def load_user(user_id):

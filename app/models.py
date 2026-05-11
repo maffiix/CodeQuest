@@ -27,7 +27,10 @@ class Level(db.Model):
     starter_code = db.Column(db.Text)
 
     order = db.Column(db.Integer, unique=True)
+    
     checker_name = db.Column(db.String(50), nullable=False)
+    
+    story_id = db.Column(db.Integer, default=0)  # 0 = нет истории
 
 
 class UserProgress(db.Model):
@@ -40,3 +43,13 @@ class UserProgress(db.Model):
 
     user = db.relationship("User", backref="progress")
     level = db.relationship("Level")
+
+
+class StoryProgress(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    story_id = db.Column(db.Integer)
+    completed = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    
+    user = db.relationship("User", backref="story_progress")
