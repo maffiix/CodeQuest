@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import login_user, login_required, current_user, logout_user
-from .models import User, Level, UserProgress
+from .models import User, Level, UserProgress, StoryProgress
 from app.checker.runner import run_checker
 from app import db, login_manager
 import os
@@ -62,6 +62,17 @@ def register():
 @login_required
 def level(level_id):
     level = Level.query.get_or_404(level_id)
+    
+    if level.story_id and level.story_id > 0:
+        story_progress = StoryProgress.query.filter_by(
+            user_id=current_user.id,
+            story_id=level.story_id,
+            completed=True
+        ).first()
+        
+        if not story_progress:
+            return redirect(url_for("main.view_story", story_id=level.story_id))
+    
     return render_template("level.html", level=level)
 
 
@@ -134,8 +145,8 @@ def submit_solution(level_id):
 
 
 @main.route("/storytelling/<int:story_id>")
+@login_required
 def view_story(story_id):
-    # data лежит в app
     story_file = os.path.join(os.path.dirname(__file__), 'data', 'story.json')
     
     try:
@@ -154,7 +165,42 @@ def view_story(story_id):
     if not story:
         return "Сюжет не найден", 404
     
+    # Проверяем, прочитана ли уже история
+    story_progress = StoryProgress.query.filter_by(
+        user_id=current_user.id,
+        story_id=story_id,
+        completed=True
+    ).first()
+    
+    story['is_read'] = story_progress is not None
+    
     return render_template("story_template.html", story=story)
+
+
+@main.route("/storytelling/<int:story_id>/complete", methods=["POST"])
+@login_required
+def complete_story(story_id):
+    # Отмечаем историю как прочитанную
+    progress = StoryProgress.query.filter_by(
+        user_id=current_user.id,
+        story_id=story_id
+    ).first()
+    
+    if not progress:
+        progress = StoryProgress()
+        progress.user_id = current_user.id
+        progress.story_id = story_id
+        progress.completed = True
+        db.session.add(progress)
+        db.session.commit()
+    
+    # Ищем уровень с этой историей
+    level = Level.query.filter_by(story_id=story_id).first()
+    
+    if level:
+        return redirect(url_for("main.level", level_id=level.id))
+    
+    return redirect(url_for("main.index"))
 
 @login_manager.user_loader
 def load_user(user_id):
