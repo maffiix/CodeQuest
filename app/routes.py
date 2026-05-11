@@ -39,10 +39,9 @@ def index():
     
     timeline = []
     added_story_ids = set()
-    previous_level_completed = True  # первая история всегда доступна
-    
+    previous_level_completed = True
+
     for idx, level in enumerate(levels):
-        # Находим историю для этого уровня
         current_story = None
         for story in stories:
             if story.get('id') == level.story_id:
@@ -50,7 +49,6 @@ def index():
                 break
         
         if current_story:
-            # История доступна если предыдущий уровень пройден (или это первая история)
             story_can_access = previous_level_completed
             story_id = current_story.get('id')
             
@@ -60,12 +58,10 @@ def index():
                 timeline.append(current_story)
                 added_story_ids.add(story_id)
         
-        # Уровень доступен если его история пройдена
         level.can_access = level.story_id in completed_stories if level.story_id else True
         level.is_completed = level.id in completed_levels
         timeline.append(level)
         
-        # Обновляем флаг для следующей истории
         previous_level_completed = level.id in completed_levels
     
     return render_template("index.html", timeline=timeline)
@@ -222,7 +218,6 @@ def view_story(story_id):
 @main.route("/storytelling/<int:story_id>/complete", methods=["POST"])
 @login_required
 def complete_story(story_id):
-    # Отмечаем историю как прочитанную
     progress = StoryProgress.query.filter_by(
         user_id=current_user.id,
         story_id=story_id
@@ -236,11 +231,6 @@ def complete_story(story_id):
         db.session.add(progress)
         db.session.commit()
     
-    # Ищем уровень с этой историей
-    level = Level.query.filter_by(story_id=story_id).first()
-    
-    if level:
-        return redirect(url_for("main.level", level_id=level.id))
     
     return redirect(url_for("main.index"))
 
