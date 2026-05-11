@@ -1,28 +1,42 @@
 from app import create_app, db
 from app.models import Level
 
-app = create_app()
-
 LEVEL_INFO = [
     {
         "title": "Вспомнить В-С-Ё",
         "description": "Задача принимает номер билета на самолёт<br>ОН записывается как [4 БУКВЫ (ИСПОЛЬЗУЮТСЯ ТОЛЬКО ABCDEF)]-[4 ЦИФРЫ]-[страна прибытия].<br>По нему генерируется талончик багажа по формуле:<br>перевести первую часть в 10ричную систему счисления, умножить на вторую часть,<br>перевести обратно в 16ричную систему счисления и дописать через тире страну прибытия и возвести в верхний регистр.<br>В итоге должно получится [16ричный код]-[Страна прибытия].",
         "starter_code": "your code here...",
         "order": 1,
-        "checker_name": "level_1"
+        "checker_name": "level_1",
+        "story_id": 1
     },
     {
-        "title": "Bridgemaker",
+        "title": "Дороги дорог",
         "description": "В сейчас находитесь на подьезде к городу и надо выбрать наилучший съезд с шоссе а так же знать время через которое мы будем дома (для консьержки) и в департаменте разведки(для важных людей)<br>Оказалось что случились временные перебои мобильной связи так что есть только бумажная карта, но пока вы были в аэропорту вы успели узнать о перекрытых дорогах<br><br>На вход подаются<br>Сначала список сьездов с шоссе в виде BH-01-1[BH-01-ОДНА ЦИФРА] J-1321[ЛАТИНСКАЯ БУКВА \"J\"-Число от 1 до 9999]<br>Заканчивается ввод сьездов вводом слова END<br>Дальше перечисляются перекрёстки и куда можно доехать от каждого перекрёстка. С каждого перекрётска может быть 4 соединения в которых может находится только один сьезд<br>в формате:<br>J-1 J-2:5 J-3:5 J-5:3 BH-01-1:1<br>[описываемый перёкресток, куда можно попасть:время в минутах]<br>ввод перекрёстков завершается вводом END<br>Дальше ввод перекрытых дорог<br>Всё просто вводим пару [Сьезд или перекрёсток-Сьезд или перекрёсток]<br>J-112:BH-01-1<br>Ввод заканчивается END_ALL<br><br>Надо посчитать оптимальный путь, показать название Сьезда с которого будет путь проходящий через J-1212 и Заканчивающийся J-24, и время пути в минутах. Считать что время пребывания в доме равно 30 минут, время сьезда с дороги до перекрёстка 1 минута.<br>Все возможные выводы INCORRECT INPUT с условиями их вызова:<br><br>INCORRECT INPUT: invalid exit format '...'<br>Вызов: формат съезда не соответствует BH-XX-Y (где X - цифра, Y - одна цифра) или J-число от 1 до 9999<br><br>INCORRECT INPUT: expected END after exits<br>Вызов: после списка съездов нет слова END<br><br>INCORRECT INPUT: invalid node format '...'<br>Вызов: название перекрёстка не начинается с J- или после J- не число<br><br>INCORRECT INPUT: node ... has X connections, expected 4<br>Вызов: у перекрёстка не ровно 4 соединения<br><br>INCORRECT INPUT: invalid edge format '...' at ...<br>Вызов: формат ребра не содержит двоеточие<br><br>INCORRECT INPUT: invalid time '...' at ...->...<br>Вызов: время после двоеточия не является целым числом<br><br>INCORRECT INPUT: invalid target node format '...' at ...<br>Вызов: узел назначения не является J-число и не является BH-XX-Y<br><br>INCORRECT INPUT: expected END after intersections<br>Вызов: после списка перекрёстков нет слова END<br><br>INCORRECT INPUT: exit ... not connected to any intersection<br>Вызов: съезд указан в списке съездов, но ни один перекрёсток не имеет соединения с этим съездом<br><br>INCORRECT INPUT: invalid blocked road format '...'<br>Вызов: формат перекрытой дороги не содержит двоеточие<br><br>INCORRECT INPUT: blocked road node '...' not found<br>Вызов: в перекрытой дороге указан узел, которого нет в графе<br><br>INCORRECT INPUT: J-1212 not found in graph<br>Вызов: в графе нет перекрёстка J-1212<br><br>INCORRECT INPUT: J-24 not found in graph<br>Вызов: в графе нет перекрёстка J-24<br><br>INCORRECT INPUT: no valid path found<br>Вызов: нет пути от какого-либо съезда до J-24 через J-1212<br><br>(АМИНЬ. удачи)",
-        "starter_code": "def calculate(a, b):\n    pass",
+        "starter_code": "your code here...",
         "order": 2,
-        "checker_name": "level_2"
+        "checker_name": "level_2",
+        "story_id": 2
+    },
+    {
+        "title": "Вундервафли PALA",
+        "description": "О НЕТ БЮРАКРАТЕЯ<br>Надо создать json файл на новые модели техники<br>ПО БЮРОКРАТИЧЕСКИМ СТАНДАРТАМ<br>Должны быть тэги ABBR (аббревиатура. например MSV-AA-R90), title (просто название техники. например aerophobous), CrDat (дата создания), Type (тип техники), если их не было указано ставить заглушку N/A<br>ВВОД:<br><br>ABBR: ******<br>Name: ******<br>CrDat: YYYY/MM/DD (Дата создания по ISO 8601)<br>Type: ******<br>[хар-ка 1]: [данные хар-ки 1]<br>[хар-ка 2]: [данные хар-ки 2]<br>....<br>[хар-ка n]: [данные хар-ки n]<br>ввод заканчивается ^Z (ctrl-z)<br>ПУСТЫЕ СТРОКИ ПРОПУСКАТЬ<br><br>ВЫВОД:<br> ******.json (****** это название техники)<br>Обязательно должны присутствовать ключи ABBR Name CrDat Type. Если они не были определены в значение подставить N/A.<br>В случае неверного формата даты подставить N/A и вывести в консоль WARING: INCORRECT DATE INPUT",
+        "starter_code": "your code here...",
+        "order": 3,
+        "checker_name": "level_3",
+        "story_id": 3
     }
 ]
 
-with app.app_context():
-    for info in LEVEL_INFO:
-        if not Level.query.filter_by(title=info["title"]).first():
-            lvl = Level(**info)
-            db.session.add(lvl)
-    db.session.commit()
+def init_levels():
+    
+    with create_app().app_context():
+        for info in LEVEL_INFO:
+            if not Level.query.filter_by(title=info["title"]).first():
+                lvl = Level(**info)
+                db.session.add(lvl)
+        db.session.commit()
+        print("Levels initialized!")
+
+if __name__ == "__main__":
+    init_levels()

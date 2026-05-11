@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container story-container">
+    
+    <div class="text-center hero">
+        <h1 class="title">{{ story.hero_title }}</h1>
+        <p class="subtitle">{{ story.hero_subtitle|safe }}</p>
+    </div>
+    
+    <div class="text-center hero">
+        <h2 class="title">{{ story.title }}</h2>
+    </div>
+
+    {% for block in story.blocks %}
+        {% if block.type == "image_left" %}
+        <div class="row story-block align-items-center">
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename=block.image) }}"
+                     class="img-fluid story-img">
+                {% if block.caption %}
+                <figcaption>{{ block.caption }}</figcaption>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <p>{{ block.text|safe }}</p>
+            </div>
+        </div>
+        
+        {% elif block.type == "image_right" %}
+        <div class="row story-block align-items-center flex-md-row-reverse">
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename=block.image) }}"
+                     class="story-img">
+                {% if block.caption %}
+                <figcaption>{{ block.caption }}</figcaption>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <p>{{ block.text|safe }}</p>
+            </div>
+        </div>
+        
+        {% elif block.type == "text_only" %}
+        <div class="row align-items-center">
+            <div class="col-12">
+                <p>{{ block.text|safe }}</p>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+    <div class="text-center final-block">
+        <h3>Поехали!</h3>
+        
+        <form method="POST" action="{{ url_for('main.complete_story', story_id=story.id) }}">
+            <button type="submit" class="btn btn-primary start-btn">
+                {{story.final_button_text}}
+            </button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
