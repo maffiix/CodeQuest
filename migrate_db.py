@@ -2,14 +2,11 @@ from app import create_app, db
 
 def migrate_db():
     with create_app().app_context():
-        try:
-            db.engine.execute('ALTER TABLE level ADD COLUMN story_id INTEGER DEFAULT 0')
-            print("Added story_id to level table")
-        except Exception as e:
-            print(f"story_id might already exist: {e}")
+        db.drop_all()
+        print("Dropped all tables")
         
         db.create_all()
-        print("Tables updated successfully!")
+        print("Created all tables with current structure")
 
 if __name__ == "__main__":
     migrate_db()
