@@ -13,19 +13,62 @@ main = Blueprint("main", __name__)
 @main.route("/")
 def index():
     levels = Level.query.order_by(Level.order).all()
-    completed_ids = []
+    
+    story_file = os.path.join(os.path.dirname(__file__), 'data', 'story.json')
+    stories = []
     try:
-        completed_ids = {
-            p.level_id
-            for p in UserProgress.query.filter_by(user_id=current_user.id, completed=True)
-        }
+        with open(story_file, 'r', encoding='utf-8') as f:
+            story_data = json.load(f)
+            stories = list(story_data.values())
     except:
-        completed_ids = []
-
-    levels = levels[0:len(completed_ids) + 1]
-    return render_template("index.html",
-        levels=levels,
-        completed_ids=completed_ids)
+        pass
+    
+    completed_levels = set()
+    completed_stories = set()
+    if current_user.is_authenticated:
+        completed_levels = {
+            p.level_id for p in UserProgress.query.filter_by(
+                user_id=current_user.id, completed=True
+            )
+        }
+        completed_stories = {
+            p.story_id for p in StoryProgress.query.filter_by(
+                user_id=current_user.id, completed=True
+            )
+        }
+    
+    timeline = []
+    added_story_ids = set()
+    previous_level_completed = True  # первая история всегда доступна
+    
+    for idx, level in enumerate(levels):
+        # Находим историю для этого уровня
+        current_story = None
+        for story in stories:
+            if story.get('id') == level.story_id:
+                current_story = story
+                break
+        
+        if current_story:
+            # История доступна если предыдущий уровень пройден (или это первая история)
+            story_can_access = previous_level_completed
+            story_id = current_story.get('id')
+            
+            if story_id not in added_story_ids:
+                current_story['is_completed'] = story_id in completed_stories
+                current_story['can_access'] = story_can_access
+                timeline.append(current_story)
+                added_story_ids.add(story_id)
+        
+        # Уровень доступен если его история пройдена
+        level.can_access = level.story_id in completed_stories if level.story_id else True
+        level.is_completed = level.id in completed_levels
+        timeline.append(level)
+        
+        # Обновляем флаг для следующей истории
+        previous_level_completed = level.id in completed_levels
+    
+    return render_template("index.html", timeline=timeline)
 
 
 @main.route("/logout")
@@ -165,7 +208,6 @@ def view_story(story_id):
     if not story:
         return "Сюжет не найден", 404
     
-    # Проверяем, прочитана ли уже история
     story_progress = StoryProgress.query.filter_by(
         user_id=current_user.id,
         story_id=story_id,

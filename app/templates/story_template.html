@@ -56,10 +56,12 @@
 
     <div class="text-center final-block">
         <h3>Поехали!</h3>
-        <a href="{{ url_for(story.final_button_url) }}"
-           class="btn btn-primary start-btn">
-            {{ story.final_button_text }}
-        </a>
+        
+        <form method="POST" action="{{ url_for('main.complete_story', story_id=story.id) }}">
+            <button type="submit" class="btn btn-primary start-btn">
+                {{story.final_button_text}}
+            </button>
+        </form>
     </div>
 
 </div>

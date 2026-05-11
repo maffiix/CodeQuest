@@ -6,9 +6,13 @@ data = {}
 lines = [line.strip() for line in sys.stdin if line.strip()]
 
 for line in lines:
-    if ': ' not in line:
+    if ':' not in line:
         continue
-    key, value = line.split(': ', 1)
+    # Разделяем по первому двоеточию
+    parts = line.split(':', 1)
+    key = parts[0].strip()
+    value = parts[1].strip()
+    
     if key == 'ABBR':
         data['ABBR'] = value
     elif key == 'Name':
@@ -29,7 +33,11 @@ for key in ['ABBR', 'Name', 'CrDat', 'Type']:
     if key not in data:
         data[key] = 'N/A'
 
-filename = f"{data['Name']}.json"
+if data['Name'] == 'N/A':
+    filename = "unnamed.json"
+else:
+    filename = f"{data['Name']}.json"
+
 with open(filename, 'w') as f:
     json.dump(data, f, indent=2)
 

@@ -9,25 +9,52 @@
 
 {% if current_user.is_authenticated %}
   <div class="container mt-5">
-    <h1 class="mb-4">Уровни</h1>
+    <h1 class="mb-4">Путь</h1>
     
     <div class="row">
-      {% for level in levels %}
-            {% if level.id in completed_ids %}
-                  <div class="card mb-3 p-3">
-                        <h4>{{ level.title }}</h4>
-
-                              <a href="{{ url_for('main.level', level_id=level.id) }}">Completed</a>
-                  </div>
-            {% else %}
-                  <div class="card mb-3 p-3" style="background-color: gray;">
-                        <h4>{{ level.title }}</h4>
-                        <a href="{{ url_for('main.level', level_id=level.id) }}"
-                        class="btn btn-primary">
-                        Enter
-                        </a>
-                  </div>
-            {% endif %}
+      {% for item in timeline %}
+        {% if item.checker_name is defined %}
+          {# Это уровень #}
+          {% if item.is_completed %}
+            <div class="card mb-3 p-3">
+              <h4>{{ item.title }}</h4>
+              <a href="{{ url_for('main.level', level_id=item.id) }}">Пройден</a>
+            </div>
+          {% elif not item.can_access %}
+            <div class="card mb-3 p-3" style="background-color: #444;">
+              <h4>{{ item.title }}</h4>
+              <span class="text-muted">Сначала пройдите историю</span>
+            </div>
+          {% else %}
+            <div class="card mb-3 p-3" style="background-color: gray;">
+              <h4>{{ item.title }}</h4>
+              <a href="{{ url_for('main.level', level_id=item.id) }}" class="btn btn-primary">
+                Начать уровень
+              </a>
+            </div>
+          {% endif %}
+        
+        {% else %}
+          {# Это история #}
+          {% if item.is_completed %}
+            <div class="card mb-3 p-3">
+              <h4>{{ item.title }}</h4>
+              <a href="{{ url_for('main.view_story', story_id=item.id) }}">Читать</a>
+            </div>
+          {% elif not item.can_access %}
+            <div class="card mb-3 p-3" style="background-color: #444;">
+              <h4>{{ item.title }}</h4>
+              <span class="text-muted">Сначала пройдите предыдущий уровень</span>
+            </div>
+          {% else %}
+            <div class="card mb-3 p-3" style="background-color: gray;">
+              <h4>{{ item.title }}</h4>
+              <a href="{{ url_for('main.view_story', story_id=item.id) }}" class="btn btn-primary">
+                Читать
+              </a>
+            </div>
+          {% endif %}
+        {% endif %}
       {% endfor %}
     </div>
   </div>
