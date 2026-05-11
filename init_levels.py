@@ -1,8 +1,6 @@
 from app import create_app, db
 from app.models import Level
 
-app = create_app()
-
 LEVEL_INFO = [
     {
         "title": "Вспомнить В-С-Ё",
@@ -30,9 +28,15 @@ LEVEL_INFO = [
     }
 ]
 
-with app.app_context():
-    for info in LEVEL_INFO:
-        if not Level.query.filter_by(title=info["title"]).first():
-            lvl = Level(**info)
-            db.session.add(lvl)
-    db.session.commit()
+def init_levels():
+    
+    with create_app().app_context():
+        for info in LEVEL_INFO:
+            if not Level.query.filter_by(title=info["title"]).first():
+                lvl = Level(**info)
+                db.session.add(lvl)
+        db.session.commit()
+        print("Levels initialized!")
+
+if __name__ == "__main__":
+    init_levels()
