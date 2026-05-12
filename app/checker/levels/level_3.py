@@ -79,7 +79,6 @@ def check(user_code: str):
                 os.remove(filename)
             
             if not (console_ok and json_ok):
-                # Если файл остался, удаляем
                 if os.path.exists(filename):
                     os.remove(filename)
                     
@@ -94,7 +93,6 @@ def check(user_code: str):
                 }
                 
         except subprocess.TimeoutExpired:
-            # Чистим файл если создался
             if os.path.exists(expected["filename"]):
                 os.remove(expected["filename"])
             return False, {
@@ -104,7 +102,6 @@ def check(user_code: str):
                 "message": "Timeout (5 seconds)"
             }
         except Exception as e:
-            # Чистим файл если создался
             if os.path.exists(expected["filename"]):
                 os.remove(expected["filename"])
             return False, {

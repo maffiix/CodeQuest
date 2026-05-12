@@ -115,24 +115,6 @@ def level(level_id):
     return render_template("level.html", level=level)
 
 
-""" @main.route("/levels")
-@login_required
-def levels():
-
-    levels = Level.query.order_by(Level.order).all()
-
-    completed_ids = {
-        p.level_id
-        for p in UserProgress.query.filter_by(user_id=current_user.id, completed=True)
-    }
-
-    return render_template(
-        "levels.html",
-        levels=levels,
-        completed_ids=completed_ids
-    ) """
-
-
 @main.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
