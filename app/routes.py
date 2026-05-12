@@ -64,6 +64,16 @@ def index():
         
         previous_level_completed = level.id in completed_levels
     
+    for story in stories:
+        story_id = story.get('id')
+        has_level = any(level.story_id == story_id for level in levels)
+        
+        if not has_level and story_id not in added_story_ids:
+            story['is_completed'] = story_id in completed_stories
+            story['can_access'] = previous_level_completed
+            timeline.append(story)
+            added_story_ids.add(story_id)
+    
     return render_template("index.html", timeline=timeline)
 
 

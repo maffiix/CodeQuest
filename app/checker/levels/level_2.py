@@ -40,7 +40,7 @@ END_ALL""", "INCORRECT INPUT: no valid path found")
     for i, (inp, expected) in enumerate(tests, start=1):
         try:
             proc = subprocess.run(
-                ["python", "-c", user_code],
+                ["python3", "-c", user_code],
                 input=inp,
                 capture_output=True,
                 text=True

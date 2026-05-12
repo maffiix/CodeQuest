@@ -29,7 +29,6 @@ LEVEL_INFO = [
 ]
 
 def init_levels():
-    
     with create_app().app_context():
         for info in LEVEL_INFO:
             if not Level.query.filter_by(title=info["title"]).first():
