@@ -18,7 +18,7 @@
 
 <form method="POST" action="{{ url_for('main.submit_solution', level_id=level.id) }}">
     <div class="mb-2">
-        <textarea id="code-area" name="code" class="form-control" rows="12" spellcheck="false" placeholder="{{ level.starter_code }}"></textarea>
+        <textarea id="code-area" name="code" class="form-control" rows="12" placeholder="{{ level.starter_code }}"></textarea>
     </div>
 
     {% if error %}
